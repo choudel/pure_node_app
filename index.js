@@ -3,6 +3,7 @@
 const http = require("http");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
+let config = require("./configuration");
 let server = http.createServer(function (req, res) {
   const parseUrl = url.parse(req.url, true);
   const path = parseUrl.pathname;
@@ -38,6 +39,8 @@ let server = http.createServer(function (req, res) {
       payload = typeof payload == "object" ? payload : {};
 
       var payloadString = JSON.stringify(payload);
+
+      res.setHeader('Content-Type','application/json')
       res.writeHead(statusCode);
       res.end(payloadString);
 
@@ -46,8 +49,8 @@ let server = http.createServer(function (req, res) {
   });
 });
 
-server.listen(3000, function () {
-  console.log("listening on port 3000");
+server.listen(config.port, function () {
+  console.log("listening on port "+ config.port +" in "+config.envName);
 });
 
 // the router
