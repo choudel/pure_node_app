@@ -6,6 +6,14 @@ const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 let config = require("./configuration");
 const fs = require("fs");
+const _data=require('./lib/data')
+//testing
+//@TODO delete it
+_data.delete('test','newFile',function(err){
+  console.log('this was the error ',err);
+});
+
+
 
 let httpServer = http.createServer(function (req, res) {
   unifiedServer(req, res);
@@ -28,7 +36,7 @@ httpsServer.listen(config.httpsPort, function () {
 
 //unified serer
 
-const unifiedServer = function () {
+const unifiedServer = function (req, res) {
   const parseUrl = url.parse(req.url, true);
   const path = parseUrl.pathname;
   const trimmedPath = path.replace(/^\/+|\/+$/g, "");
@@ -75,12 +83,12 @@ const unifiedServer = function () {
 // the router
 
 var handlers = {};
-handlers.sample = function (data, callback) {
-  callback(406, { name: "sample handler" });
+handlers.ping = function (data, callback) {
+  callback(200);
 };
 handlers.notFound = function (data, callback) {
   callback(404);
 };
 const router = {
-  sample: handlers.sample,
+  ping: handlers.ping,
 };
