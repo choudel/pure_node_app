@@ -11,8 +11,8 @@ const handlers=require('./lib/handlers')
 const helpers=require('./lib/helpers')
 //testing
 //@TODO delete it
-_data.delete('test','newFile',function(err){
-  console.log('this was the error ',err);
+_data.read('users','0123456789',function(phone){
+  
 });
 
 
@@ -42,7 +42,7 @@ const unifiedServer = function (req, res) {
   const parseUrl = url.parse(req.url, true);
   const path = parseUrl.pathname;
   const trimmedPath = path.replace(/^\/+|\/+$/g, "");
-  const queryStringObject = parseUrl.pathname;
+  const queryStringObject = parseUrl.query;
   const method = req.method.toLocaleLowerCase();
   const headers = req.headers;
   const decoder = new StringDecoder("utf-8");
